@@ -34,7 +34,7 @@ npm run start
 If you want to consume your media you can use mpv.
 
 ```
-curl -L http:<ip address>:<port>/playlist | mpv --playlist
+curl -L http:<ip address>:<port>/playlist | mpv --playlist=-
 # Search specific file
-curl -L http:<ip address>:<port>/playlist | grep -i '<search term>' | mpv --playlist
+curl -L http:<ip address>:<port>/playlist | grep -i '<search term>' | mpv --playlist=-
 ```
