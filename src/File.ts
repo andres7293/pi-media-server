@@ -31,11 +31,7 @@ class File {
     }
 
     async delete(): Promise<boolean> {
-        try {
-            await fs.promises.unlink(this.absPath);
-        } catch (error) {
-            return false;
-        }
+        await fs.promises.unlink(this.absPath);
         return true;
     }
 

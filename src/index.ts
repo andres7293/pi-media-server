@@ -65,11 +65,11 @@ app.get('/random', async (req: express.Request, res: express.Response) => {
 
 app.delete('/', bodyParser.text(), async (req: express.Request, res: express.Response) => {
     let fname: string = req.body;
-    let f = new File(MEDIA_SERVER_DIR + fname);
-    let success: boolean = await f.delete();
-    if (success) {
+    let file: File = new File(MEDIA_SERVER_DIR, fname);
+    try {
+        await file.delete();
         res.status(200).send(fname + ' removed');
-    } else {
+    } catch(error) {
         res.status(400).send('error removing ' + fname);
     }
 });
