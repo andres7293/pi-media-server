@@ -6,8 +6,8 @@ import { fileURLToPath } from 'url';
 
 const config: IConfig = getConfig();
 
-const PORT: number = config.PORT;
-const MEDIA_SERVER_DIR: string = config.MEDIA_SERVER_DIR;
+const PORT: number = config.port;
+const MEDIA_SERVER_DIR: string = config.media_directory;
 const app = express();
 
 app.use(express.static(MEDIA_SERVER_DIR));

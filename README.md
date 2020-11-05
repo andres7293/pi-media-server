@@ -19,7 +19,7 @@ Create a file named: media-server.json with the following content:
 ````json
 {
   "port": "8080",
-  "media_dir": "<Path to your own media files>"
+  "media_directory": "<Path to your own media files>"
 }
 ````
 

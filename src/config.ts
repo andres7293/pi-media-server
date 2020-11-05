@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 
 interface IConfig {
-    PORT: number;
-    MEDIA_SERVER_DIR: string;
+    port: number;
+    media_directory: string;
 }
 
 class ConfigError extends Error {
@@ -17,11 +17,11 @@ class ConfigError extends Error {
 }
 
 function validateConfig(config: IConfig) {
-    if (isNaN(config.PORT)) {
-        throw new ConfigError('config.PORT is NaN. Should be a valid number');
+    if (isNaN(config.port)) {
+        throw new ConfigError('config.port is NaN. Should be a valid number');
     }
-    if (config.MEDIA_SERVER_DIR === "undefined") {
-        throw new ConfigError('config.MEDIA_SERVER_DIR is undefined. Should be a string');
+    if (config.media_directory === "undefined") {
+        throw new ConfigError('config.media_directory is undefined. Should be a string');
     }
 }
 
@@ -34,8 +34,8 @@ function getConfigFromFile(configFile: string): IConfig {
         throw new ConfigError('Error converting to JSON media-server.json');
     }
     const config: IConfig = {
-        PORT: Number(configJson.port),
-        MEDIA_SERVER_DIR: String(configJson.media_dir)
+        port: Number(configJson.port),
+        media_directory: String(configJson.media_directory)
     }
     try {
         validateConfig(config);
