@@ -10,8 +10,6 @@ const PORT: number = config.port;
 const MEDIA_SERVER_DIR: string = config.media_directory;
 const app = express();
 
-app.use(express.static(MEDIA_SERVER_DIR));
-
 function encodePathToUri(req: express.Request, file: string): string {
     return req.protocol + '://' + req.hostname + ':' + String(PORT) + req.baseUrl + '/' + encodeURIComponent(file);
 }
@@ -27,6 +25,27 @@ async function generatePlaylist(req: express.Request, dir: File, shuffle: boolea
     });
     return playlist;
 }
+
+function basicAuthentication(req: express.Request, res: express.Response, next: express.NextFunction) {
+    if (!req.headers.authorization) {
+        res.set('WWW-Authenticate', 'Basic realm=Accessing private zone').status(401).send('Private zone');
+    } else {
+        let Type: string;
+        let realm: string;
+        [Type, realm] = req.headers.authorization.split(' ');
+        realm = Buffer.from(realm, 'base64').toString('utf-8');
+        let user: string;
+        let password: string;
+        [user, password] = realm.split(':');
+        if (user === "andres" && password === "root") {
+            next();
+        } else {
+            res.status(401).send('Bad authentication');
+        }
+    }
+}
+
+app.use(express.static(MEDIA_SERVER_DIR));
 
 app.get('/playlist', async (req: express.Request, res: express.Response) => {
     const rootDir: File = new File(MEDIA_SERVER_DIR);
