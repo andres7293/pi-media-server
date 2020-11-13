@@ -18,12 +18,14 @@ class File {
         this.absPath = this.path + this.fname;
     }
 
-    async write(data: Buffer | string): Promise<void> {
-        return fs.promises.writeFile(this.absPath, data);
-    }
-
-    async createFile(fname: string, data: Buffer | string): Promise<void> {
-        return fs.promises.writeFile(this.absPath + '/' + fname, data);
+    async write(data: Buffer | string, fileName?: string): Promise<void> {
+        let path: string = '';
+        if (fileName !== undefined) {
+            path = this.absPath + '/' + fileName;
+        } else {
+            path = this.absPath;
+        }
+        return fs.promises.writeFile(path, data);
     }
 
     async createDir(): Promise<void> {
@@ -73,8 +75,21 @@ class File {
     }
 
     private getStat(): any {
-        return fs.statSync(this.absPath);
+        try {
+            return fs.statSync(this.absPath);
+        } catch(error) {
+            throw new FileError(error.message.toString());
+        }
     }
 }
 
-export { File }
+class FileError extends Error {
+    public name: string;
+
+    constructor(message: string) {
+        super(message);
+        this.name = this.constructor.name;
+    }
+}
+
+export { File, FileError }

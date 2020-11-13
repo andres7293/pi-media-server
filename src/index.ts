@@ -50,7 +50,7 @@ app.use(express.static(MEDIA_SERVER_DIR));
 app.get('/playlist', async (req: express.Request, res: express.Response) => {
     const rootDir: File = new File(MEDIA_SERVER_DIR);
     let playlist: string = await generatePlaylist(req, rootDir);
-    await rootDir.createFile('playlist.m3u', playlist);
+    await rootDir.write(playlist, 'playlist.m3u');
     res.redirect(301, encodePathToUri(req, '/playlist.m3u'));
     res.end();
 });
@@ -58,7 +58,7 @@ app.get('/playlist', async (req: express.Request, res: express.Response) => {
 app.get('/random', async (req: express.Request, res: express.Response) => {
     const rootDir: File = new File(MEDIA_SERVER_DIR);
     let playlist: string = await generatePlaylist(req, rootDir, true);
-    await rootDir.createFile('random.m3u', playlist);
+    await rootDir.write(playlist, 'playlist.m3u');
     res.redirect(301, encodePathToUri(req, '/random.m3u'));
     res.end();
 });
