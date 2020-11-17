@@ -18,6 +18,18 @@ class File {
         this.absPath = this.path + this.fname;
     }
 
+    getFileName(): string {
+        return this.fname;
+    }
+
+    getPath(): string {
+        return this.path;
+    }
+
+    getAbsPath(): string {
+        return this.path + this.fname;
+    }
+
     async write(data: Buffer | string, fileName?: string): Promise<void> {
         let path: string = '';
         if (fileName !== undefined) {
@@ -35,18 +47,6 @@ class File {
     async delete(): Promise<boolean> {
         await fs.promises.unlink(this.absPath);
         return true;
-    }
-
-    getFileName(): string {
-        return this.fname;
-    }
-
-    getPath(): string {
-        return this.path;
-    }
-
-    getAbsPath(): string {
-        return this.path + this.fname;
     }
 
     async list(): Promise<File[]> {
