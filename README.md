@@ -46,4 +46,6 @@ cp mpv-scripts/del.sh /opt
 cp mpv-scripts/input.conf ~/.config/mpv/input.conf
 ```
 
+Edit input.conf with your own server address
+
 In order to remove a remote file just press DEL key.
