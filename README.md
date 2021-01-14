@@ -38,3 +38,12 @@ curl -L http:<ip address>:<port>/playlist | mpv --playlist=-
 # Search specific file
 curl -L http:<ip address>:<port>/playlist | grep -i '<search term>' | mpv --playlist=-
 ```
+
+### Delete remote files with mpv
+
+```bash
+cp mpv-scripts/del.sh /opt
+cp mpv-scripts/input.conf ~/.config/mpv/input.conf
+```
+
+In order to remove a remote file just press DEL key.
