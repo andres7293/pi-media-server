@@ -5,6 +5,13 @@ import { File, FileError } from '../File';
 const testDir = '/tmp/pi-media-server-test';
 const testFile = 'testFile.txt';
 
+async function createListOfFiles(dir: string, files: string[]): Promise<void> {
+    await fs.promises.mkdir(dir);
+    files.forEach(async (name) => {
+        await fs.promises.open(dir + '/' + name, 'w');
+    });
+}
+
 beforeAll(async () => {
     await fs.promises.mkdir(testDir);
     await fs.promises.open(testDir + '/' + testFile, 'w');
@@ -82,5 +89,19 @@ test('check if write writes correct data to file', async (done) => {
     await file.write(textToWrite);
     let textRead: Buffer = await fs.promises.readFile(testDir + '/' + 'newF');
     expect(textRead.toString()).toMatch(textToWrite);
+    done();
+});
+
+test('check if list files match with files created in directory', async (done) => {
+    let subdir: string = testDir + '/subdir';
+    let createdFiles = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+    await createListOfFiles(subdir, createdFiles);
+    const d: File = new File(subdir);
+    let listedFiles: File[] = await d.list();
+    let listedFileNames: string[] = [];
+    listedFiles.forEach((file) => {
+        listedFileNames.push(file.getFileName());
+    });
+    expect(listedFileNames).toEqual(expect.arrayContaining(listedFileNames));
     done();
 });
