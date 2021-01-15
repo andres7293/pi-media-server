@@ -3,6 +3,7 @@ import { File } from './File';
 import { getConfig, IConfig } from './config';
 import * as bodyParser from 'body-parser';
 import { fileURLToPath } from 'url';
+import pageViewCounter from './middleware/PageViewCounter';
 
 const config: IConfig = getConfig();
 
@@ -45,6 +46,8 @@ function basicAuthentication(req: express.Request, res: express.Response, next: 
     }
 }
 
+app.use(pageViewCounter());
+
 app.use(express.static(MEDIA_SERVER_DIR));
 
 app.get('/playlist', async (req: express.Request, res: express.Response) => {
@@ -73,6 +76,11 @@ app.delete('/', bodyParser.text(), async (req: express.Request, res: express.Res
         res.status(400).send('error removing ' + fname);
     }
 });
+
+app.get('/cache', (req: express.Request, res: express.Response) => {
+    res.send(req.body.pageViewCache);
+});
+
 
 app.listen(PORT, () => {
     console.log('server started at, ', PORT);
