@@ -3,7 +3,7 @@
 Minimalistic media server intended to use with raspberry pi and [mpv](https://mpv.io/)
 The server will generate a playlist file with the content of the directory specified in the configuration file. 
 
-## Install and configuration
+## Server side
 
 ```bash
 git clone https://github.com/andres7293/pi-media-server
