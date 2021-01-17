@@ -1,4 +1,4 @@
-import Sqlite3 from '../db/Sqlite3';
+import Sqlite3 from '../db/driver/Sqlite3';
 
 const dbName: string = ":memory:";
 const sqlite3: Sqlite3 = new Sqlite3(dbName);
