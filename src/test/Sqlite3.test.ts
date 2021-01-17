@@ -34,6 +34,14 @@ test('test get all rows', async (done) => {
     done();
 });
 
+test('test get one row', async (done) => {
+    const rows = await sqlite3.get(`SELECT * FROM users;`);
+    if (rows === null)
+        throw new Error('rows cant be null');
+    expect(rows[0]).toEqual({userid: 1, usermail: 'andres@mail.com', username: 'andres'});
+    done();
+});
+
 test('test bad sql statement should throw error', async (done) => {
     await expect( sqlite3.run('sdf' ))
         .rejects
