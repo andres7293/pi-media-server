@@ -61,7 +61,7 @@ app.get('/playlist', async (req: express.Request, res: express.Response) => {
 app.get('/random', async (req: express.Request, res: express.Response) => {
     const rootDir: File = new File(MEDIA_SERVER_DIR);
     let playlist: string = await generatePlaylist(req, rootDir, true);
-    await rootDir.write(playlist, 'playlist.m3u');
+    await rootDir.write(playlist, 'random.m3u');
     res.redirect(301, encodePathToUri(req, '/random.m3u'));
     res.end();
 });
